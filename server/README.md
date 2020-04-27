@@ -1,6 +1,6 @@
 Server is responsible for analyzing received audio sample and sending a trigger notification if thresholds were met. 
 
-### CConfiguration params
+### Configuration params
 
 * `log_level` - [logrus](https://github.com/sirupsen/logrus) log level.
 * `sample_rate` - frame rate used for received audio sample.

@@ -68,7 +68,7 @@ func main() {
 				binary.BigEndian.PutUint32(buffer[i*4:], math.Float32bits(x))
 			}
 
-			logrus.Info("Received")
+			logrus.Debug("Sample is ready")
 
 			c.SendSample(buffer)
 		})
