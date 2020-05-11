@@ -23,7 +23,7 @@ import (
 )
 
 type Config struct {
-	LogLevel    string `short:"l" long:"log_level" desction:"Log level" default:"info"`
+	LogLevel    string `short:"l" long:"log_level" description:"Log level" default:"info"`
 	SampleRate  int    `short:"r" long:"sample_rate" description:"Recording sample rate" default:"48000"`
 	RecordFrame int    `short:"f" long:"record_frame" description:"How many seconds to record" default:"2"`
 	MQTT        *shared.MQTTConfig
