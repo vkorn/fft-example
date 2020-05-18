@@ -21,7 +21,8 @@ FROM $RUN_IMAGE
 ENV MQTT_BROKER=volantmq:1883 \
 	MQTT_SERVER_USER=fft-server \
 	MQTT_SERVER_PASS=server-pass \
-	MQTT_SERVER_CLIENT=fft-server \ 
+	MQTT_SERVER_CLIENT=fft-server \
+	MQTT_RESULTS_TOPIC=results \
 	SAMPLE_RATE=48000
 
 COPY --from=build /server /server

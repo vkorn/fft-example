@@ -38,10 +38,9 @@ func NewServer(config *Config, analyzer *Analyzer) *Server {
 }
 
 func (s *Server) Process(req *SampleRequest) *shared.Response {
-	if s.analyzer.Analyze(req) {
-		return shared.NewResponse(req.Timestamp)
-	}
-	return nil
+	r := shared.NewResponse(req.Timestamp)
+	r.Trigger = s.analyzer.Analyze(req)
+	return r
 }
 
 func main() {
@@ -76,7 +75,9 @@ func main() {
 		go func() {
 			response := server.Process(req)
 			if response != nil {
-				logrus.Infof("Triggered at %s", response.Timestamp.Format(time.Kitchen))
+				if response.Trigger {
+					logrus.Infof("Triggered at %s", response.Timestamp.Format(time.Kitchen))
+				}
 				err := c.SendResults(response)
 				if err != nil {
 					logrus.Warn(err)

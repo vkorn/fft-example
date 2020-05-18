@@ -23,6 +23,13 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type MQTTClient interface {
+	SendSample(payload []byte) error
+	SendResults(r *Response) error
+	Subscribe(topic string, callback ResultHandler)
+	Close()
+}
+
 type client struct {
 	client      mqtt.Client
 	topic       string
@@ -32,7 +39,7 @@ type client struct {
 
 type ResultHandler func([]byte)
 
-func NewMQTTClient(config *MQTTConfig) *client {
+func NewMQTTClient(config *MQTTConfig) MQTTClient {
 	op := mqtt.NewClientOptions().
 		SetClientID(config.Client).
 		AddBroker(fmt.Sprintf("tcp://%s", config.Broker)).
@@ -81,7 +88,12 @@ func (c *client) SendResults(r *Response) error {
 		return nil
 	}
 
-	token := c.client.Publish(c.resultTopic, c.qos, false, r)
+	data, err := r.ToJson()
+	if err != nil {
+		return err
+	}
+
+	token := c.client.Publish(c.resultTopic, c.qos, false, data)
 	if token.WaitTimeout(2*time.Second) && token.Error() != nil {
 		return token.Error()
 	}

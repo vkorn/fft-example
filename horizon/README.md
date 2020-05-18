@@ -14,7 +14,7 @@ echo fft-client: $(echo -n "client-pass" | openssl dgst -sha256 ) >> vmq.users
 Publish service
 
 ```
-hzn exchange service publish -f service.json -I
+hzn exchange service publish -f service.definition.json -I
 ```
 
 

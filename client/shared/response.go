@@ -14,7 +14,10 @@
 
 package shared
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Response struct {
 	Timestamp time.Time
@@ -26,4 +29,14 @@ func NewResponse(ts time.Time) *Response {
 		Timestamp: ts,
 		Trigger:   true,
 	}
+}
+
+func FromJson(data []byte) (*Response, error){
+	r := new(Response)
+	err := json.Unmarshal(data, r)
+	return r, err
+}
+
+func (r *Response) ToJson() ([]byte, error) {
+	return json.Marshal(r)
 }

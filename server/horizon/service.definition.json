@@ -3,17 +3,17 @@
 	"label": "fft",
 	"description": "FFT sound analyzer",
 	"documentation": "https://github.com/vkorn/fft-example",
-	"url": "com.github.vkorn.fft-example",
-	"version": "1.0.0",
+	"url": "com.github.vkorn.fft-example-client",
+	"version": "${SERVICE_VERSION}",
 	"arch": "${ARCH}", 
 	"public": false,
 	"sharable": "singleton",
 	"requiredServices": [],
 	"userInput": [
 		 { "name": "VOLANTMQ_CONFIG", "label": "", "type": "string", "defaultValue": "/config/volantmq.yaml" },
-		 { "name": "MQTT_BROKER", "label": "", "type": "string", "defaultValue": "" },
+		 { "name": "MQTT_BROKER", "label": "", "type": "string", "defaultValue": "volantmq:1883" },
 		 { "name": "MQTT_SERVER_USER", "label": "", "type": "string", "defaultValue": "fft-server" },
-		 { "name": "MQTT_SERVER_PASS", "label": "", "type": "string", "defaultValue": "" },
+		 { "name": "MQTT_SERVER_PASS", "label": "", "type": "string", "defaultValue": "server-pass" },
 		 { "name": "MQTT_SERVER_CLIENT", "label": "", "type": "string", "defaultValue": "fft-server" },
 		 { "name": "SAMPLE_RATE", "label": "", "type": "string", "defaultValue": "48000" }
 	],
@@ -21,7 +21,7 @@
 		"services": {
 			"volantmq": {
 				"binds": ["/Users/vkorn/Work/horizon/fft-example/volantmq/vmq.users:/vmq.users"],
-				"image": "vkorn/volantmq:1.0.1",
+				"image": "${DOCKER_IMAGE_MQTT}:1.0.1",
 				"privileged": false,
 				"specific_ports": [{
 					"HostPort": "1883:1883/tcp",
@@ -29,7 +29,7 @@
 				}]
 			},
 			"fft-server": {
-				"image": "vkorn/fft-server:1.0.3",
+				"image": "${DOCKER_IMAGE_SERVER}:1.0.4",
 				"privileged": false
 			}
 		}

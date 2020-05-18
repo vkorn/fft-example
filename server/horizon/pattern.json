@@ -1,5 +1,5 @@
 {
-  "name": "pattern-fft",
+  "name": "pattern-${SERVICE_NAME}",
   "label": "FFT analyzer services",
   "description": "Pattern for FFT analyzer services.",
   "services": [
@@ -9,7 +9,7 @@
       "serviceArch": "${ARCH}",
       "serviceVersions": [
         {
-          "version": "1.0.0"
+          "version": "${SERVICE_VERSION}"
         }
       ]
     }
